@@ -21,9 +21,20 @@ func main() {
 		return
 	}
 
-	for i, file := range files {
+	var names []byte
+	for _, file := range files {
 		if file.Size() == 0 {
-			fmt.Printf("File%d: %s\n", i, file.Name())
+			name := file.Name()
+			names = append(names, name...)
+			// fmt.Printf("File%d: %s\n", i, name)
 		}
 	}
+
+	err2 := ioutil.WriteFile("out.txt", names, 0644)
+	if err2 != nil {
+		fmt.Println(err2)
+		return
+	}
+	fmt.Printf("names: %s\n", names)
+
 }
