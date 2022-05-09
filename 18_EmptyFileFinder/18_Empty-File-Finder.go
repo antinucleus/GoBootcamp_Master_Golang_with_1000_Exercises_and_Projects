@@ -21,11 +21,21 @@ func main() {
 		return
 	}
 
-	var names []byte
+	var total int
+
+	for _, file := range files {
+		if file.Size() == 0 {
+			total += len(file.Name()) + 1
+		}
+	}
+	fmt.Printf("Total required spaee: %d bytes.\n", total)
+
+	names := make([]byte, 0, total)
 	for _, file := range files {
 		if file.Size() == 0 {
 			name := file.Name()
 			names = append(names, name...)
+			names = append(names, '\n')
 			// fmt.Printf("File%d: %s\n", i, name)
 		}
 	}
